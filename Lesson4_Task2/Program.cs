@@ -9,30 +9,42 @@ namespace Lesson4_Task2
             // запрос ввода чисел через пробел, формирование массива значений, где разделитель - пробел
             Console.Write("Введите числа через пробел: ");
             string line = Console.ReadLine();
-            string[] numbersByLine = line.Split(' ');
+            string number = "";
+            int sum = 0;
 
-            // преобразование строкового массива в целочисленный
-            int[] numbers = new int[numbersByLine.Length];
+            // обработать строку посимвольно: если не равно пробелу, то к строкеовой переменной number добавляем обрабатываемый символ, если равно, то
+            // если number не равен пустой строке, то увеличиваем сумму: считаем сумму, как предыдущая сумма плюс number (number конвертируем в число)
+            // иначе - присваем number пустую строку.
 
-            for (int i = 0; i < numbersByLine.Length; i++)
+            for (int i = 0; i < line.Length; i++)
             {
-                numbers[i] = Convert.ToInt32(numbersByLine[i]);
+                char e = line[i];
+                if (e != ' ')
+                {
+                    number = number + e;
+                }
+                else
+                {
+                    sum = Sum(number, sum);
+                    number = "";
+                }
             }
+            // вызов метода sum, чтобы прибавить последнее полученное число с помощью цикла for
+            sum = Sum(number, sum);
 
-            // подсчет суммы значений элементов массива numbers и вывод на экран пользователю
-            int sum;
-            sum = 0;
-            for (int i = 0; i < numbers.Length; i++)
-            {
-                sum = sum + numbers[i];
-            }
+            // вывод суммы в консоль
             Console.WriteLine($"Сумма чисел: {sum}");
+        }
 
-            /* вывод последовательно каждого элемента массива numbers
-            foreach (var number in numbers)
+        // метод увеличивает сумму путем сложения суммы и числа, полученного из строки путем конвертации строки в число
+        static int Sum(string number, int sum)
+        {
+            if (number != "")
             {
-                Console.WriteLine($"{number}");
-            }  */
+                sum = sum + Convert.ToInt32(number);
+            }
+            return sum;
         }
     }
 }
+
